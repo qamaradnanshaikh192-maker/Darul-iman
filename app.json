@@ -1,0 +1,25 @@
+{
+  "expo": {
+    "name": "Darul Iman",
+    "slug": "darul-iman",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#0F3D32"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.daruliman.app"
+    },
+    "android": {
+      "package": "com.daruliman.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#0F3D32"
+      }
+    },
+    "extra": {
+      "description": "A Quran, Hifz and daily Islamic companion"
+    }
+  }
+}
