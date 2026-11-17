@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-
 import {
   SafeAreaView,
   StatusBar,
@@ -18,6 +17,24 @@ import ToolsScreen from './src/screens/ToolsScreen';
 import { colors } from './src/theme/colors';
 
 type Tab = 'Home' | 'Quran' | 'Prayer' | 'Imams' | 'Hadith' | 'Tools';
+
+const tabs: Tab[] = [
+  'Home',
+  'Quran',
+  'Prayer',
+  'Imams',
+  'Hadith',
+  'Tools',
+];
+
+const tabIcons: Record<Tab, string> = {
+  Home: '⌂',
+  Quran: '📖',
+  Prayer: '🕌',
+  Imams: '☪',
+  Hadith: '📜',
+  Tools: '📿',
+};
 
 export default function App() {
   const [tab, setTab] = useState<Tab>('Home');
@@ -40,7 +57,7 @@ export default function App() {
             imam={imam}
             onOpenPrayer={() => navigate('Prayer')}
             onChangeImam={() => navigate('Imams')}
-            onNavigate={(nextTab) => navigate(nextTab)}
+            onNavigate={(nextTab) => navigate(nextTab as Tab)}
           />
         )}
 
@@ -69,8 +86,10 @@ export default function App() {
       </View>
 
       <View style={styles.nav}>
-        {(['Home', 'Quran', 'Prayer', 'Hadith', 'Tools'] as const).map(
-          (item) => (
+        {tabs.map((item) => {
+          const active = tab === item;
+
+          return (
             <Pressable
               key={item}
               onPress={() => navigate(item)}
@@ -78,15 +97,26 @@ export default function App() {
             >
               <Text
                 style={[
+                  styles.navIcon,
+                  active && styles.activeText,
+                ]}
+              >
+                {tabIcons[item]}
+              </Text>
+
+              <Text
+                style={[
                   styles.navLabel,
-                  tab === item && styles.navActive,
+                  active && styles.activeText,
                 ]}
               >
                 {item}
               </Text>
+
+              {active && <View style={styles.activeLine} />}
             </Pressable>
-          )
-        )}
+          );
+        })}
       </View>
     </SafeAreaView>
   );
@@ -97,32 +127,43 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: colors.background,
   },
-
   content: {
     flex: 1,
   },
-
   nav: {
     flexDirection: 'row',
     justifyContent: 'space-around',
-    paddingVertical: 14,
-    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    backgroundColor: colors.green,
+    paddingTop: 10,
+    paddingBottom: 8,
     borderTopWidth: 1,
-    borderTopColor: '#E5E5E5',
+    borderTopColor: '#C5A45A',
   },
-
   navItem: {
-    paddingHorizontal: 7,
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 5,
   },
-
+  navIcon: {
+    fontSize: 19,
+    color: '#FFFFFF',
+    marginBottom: 3,
+  },
   navLabel: {
-    color: '#78857E',
-    fontSize: 11,
+    fontSize: 10,
+    color: '#FFFFFF',
     fontWeight: '600',
   },
-
-  navActive: {
-    color: colors.green,
-    fontWeight: '900',
+  activeText: {
+    color: '#E7C56D',
+  },
+  activeLine: {
+    width: 20,
+    height: 2,
+    backgroundColor: '#E7C56D',
+    borderRadius: 2,
+    marginTop: 4,
   },
 });
